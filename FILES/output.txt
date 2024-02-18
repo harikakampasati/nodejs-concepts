@@ -1,0 +1,2 @@
+Data read from input.txt: this is the sample data to test file system. 
+ Data created Sun Feb 18 2024 08:48:55 GMT+0530 (India Standard Time)
