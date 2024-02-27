@@ -2,7 +2,7 @@
  * Routing 
  * -------
  * Routing defines the way in way which the client requests are handled by the application endpoints
- * different types of URLs pattern0                                                                                                                                                                                                                                                  
+ * different types of URLs patterns                                                                                                                                                                                                                                                 
  * 1. file based urls :-
  * --------------------
  * file based URL is that where in the URL we specify the file name which we want access and see in the browser 
@@ -32,3 +32,30 @@
  * 2.params :- (nodeapp.com/books/programming/js) here books is resource and programming and js are parameters
  * 
  */  
+
+const http = require("http");
+
+/**
+ * whenever we are making request to the server we are getting that request inside the request parameter 
+ * on this request parameter we have a property called url
+ * that url property is going to store the value which the user enter after route url
+ */ 
+
+server = http.createServer((req,res) =>{
+    const path = req.url; 
+    if(path === '/' || path === '/home'){
+        res.end("you are in home page");
+    }
+    else if( path === '/about'){
+        res.end("you are in about page");
+    }
+    else if( path === '/contact'){
+        res.end("you are in contact page");
+    }
+    else {
+        res.end("Error: 404 page not found")
+    }
+})
+server.listen("3010","127.0.0.1",()=> {
+    console.log("server is listening")
+})
