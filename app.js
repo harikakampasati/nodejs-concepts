@@ -1,26 +1,21 @@
 const http = require("http");
 const fs = require("fs");
 const url = require("url");
-//custom module
-const productDeailsById  = require("./Modules/productDetailsById")
+const events = require("events");
 
-// JSON.parse convert json data into javascript object
-// if we want to use these product json data in our node application first we need to convert into javascript object
+//user defined modules
+const productDeailsById  = require("./Modules/productDetailsById");
+const user = require("./Modules/user");
+
+
 let products = JSON.parse(fs.readFileSync(`${__dirname}/Data/products.json`, 'utf-8'));
-// const products = fs.readFileSync(`${__dirname}/Data/products.json`, 'utf-8')
 products = JSON.stringify(products)
 
-/**
- * whenever we are making request to the server we are getting that request inside the request parameter 
- * on this request parameter we have a property called url
- * that url property is going to store the value which the user enter after route url
- */ 
 
-server = http.createServer((req,res) =>{
+const  server = http.createServer();
+server.on('request', (req, res) => {
     let {query, pathname: path} =url.parse(req.url, true);
     if(path === '/' || path.toLocaleLowerCase() === '/home'){
-        // before we call method called writeHead, we can use the writeHead method to set status code and the header for the response
-        // to define a header for response we can pass  an object as second argument, here we can create some custome headers
         res.writeHead(200, {
             'Content-Type': 'text/html',
             'my-hearder': "hello harika kampasati"
@@ -64,8 +59,22 @@ server = http.createServer((req,res) =>{
         });
         res.end("Error: 404 page not found")
     }
+
 })
+
 server.listen("3010","127.0.0.1",()=> {
     console.log("server is listening")
 })
+
+let myEmitter = new user();
+
+myEmitter.on("userCreated", (id, name)=> {
+    console.log(`new user with name ${name} and id ${id} is created`);
+})
+
+myEmitter.on("userCreated", (id, name)=> {
+    console.log(`new user with name ${name} and id ${id} is added to database`);
+})
+
+myEmitter.emit("userCreated", 248, "Harika Botta");
 
