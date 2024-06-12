@@ -121,7 +121,9 @@
  * 
  * defination:
  *   
- * 
+ * 2. nextTick queue :-
+ * --------------------
+ * the proccess.nexttick queue is the function that we can use when we really need to execute a certain callback function right after the  currently processing the event loop phase
  * 
  * 
  * 
